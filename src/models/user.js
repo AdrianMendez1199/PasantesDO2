@@ -36,6 +36,15 @@ const UserSchema = new mongoose.Schema({
     default: false,
   },
 
+  create_at: {
+    type: Date,
+    default: Date.now,
+  },
+
+  update_at: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 UserSchema.plugin(uniqueValidator, { message: 'el campo {PATH} es unico.' });
