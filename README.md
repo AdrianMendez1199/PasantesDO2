@@ -14,5 +14,5 @@ yarn dev
 
 Correr en Produccion
 ```
-yarn Produccion
+yarn dev
 ```
