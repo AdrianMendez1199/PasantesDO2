@@ -1,6 +1,9 @@
 ### Pasantes.do
 
-
+instalar servicio den mongo
+```
+docker-compose up -d --build
+```
 
 instalar dependecias
 ```
