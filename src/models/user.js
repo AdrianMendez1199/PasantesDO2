@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
+// const Role = require('./role');
+
+
+const rolesValid = {
+  values: ['ADMIN_ROL', 'USER_ROLE'], // add function to find roles valid
+  message: '{VALUE} no es un rol valido',
+};
+
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -19,8 +27,9 @@ const UserSchema = new mongoose.Schema({
   },
 
   role: {
+    enum: rolesValid,
     type: String,
-    default: 'USER_ROL',
+    default: 'USER_ROLE',
   },
   img: {
     type: String,
@@ -53,7 +62,7 @@ UserSchema.plugin(uniqueValidator, { message: 'el campo {PATH} es unico.' });
  * this function delete
  * password to object json
  */
-UserSchema.methods.toJSON = function () {
+UserSchema.methods.toJSON = function deletePasswordToJSON() {
   const user = this;
 
   const userObject = user.toObject();
