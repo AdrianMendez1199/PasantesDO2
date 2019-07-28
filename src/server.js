@@ -15,6 +15,6 @@ app.use(bodyParser.json());
 app.use('/user', user);
 app.use('/role', role);
 
-app.listen(7000, () => {
-    console.log('El servidor esta corriendo en el puerto 3000');
+app.listen(process.env.PORT, () => {
+    console.log(`El servidor esta corriendo en el puerto ${process.env.PORT}`);
 });
