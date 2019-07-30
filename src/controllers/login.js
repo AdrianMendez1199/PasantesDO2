@@ -22,7 +22,7 @@ const auth = async (req, res) => {
     }
     let token = jwt.sign({
       payload: userLogin,
-    }, 'hola-mundo', { expiresIn: 60 * 60 });
+    }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
 
     res.status(200).json({
       ok: true,

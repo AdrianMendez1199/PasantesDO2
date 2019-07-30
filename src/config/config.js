@@ -1,5 +1,12 @@
+// =============================
+// Puerto 
+// =============================
 process.env.PORT = process.env.PORT || 3000;
 
+
+// =============================
+// Desarrollo o produccion
+// =============================
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
@@ -14,3 +21,18 @@ if (process.env.NODE_ENV === 'dev') {
 }
 
 process.env.URLDB = urlDB;
+
+
+// =============================
+// Caducidad TOKEN
+// =============================
+
+process.env.CADUCIDAD_TOKEN = 60 * 60;
+
+
+// =============================
+// SEED de autenticacion
+// =============================
+
+process.env.SEED = process.env.SEED || 'hola-mundo-token-autenticacion';
+
