@@ -1,7 +1,7 @@
 // const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
-
+const jwt = require('jsonwebtoken');
 
 const auth = async (req, res) => {
   const { body } = req;
@@ -20,12 +20,16 @@ const auth = async (req, res) => {
         message: 'usuario o (clave) incorrecto',
       });
     }
+    let token = jwt.sign({
+      payload: userLogin,
+    }, 'hola-mundo', { expiresIn: 60 * 60 });
 
     res.status(200).json({
       ok: true,
       userLogin,
-      token: '123',
+      token
     });
+
   } catch (err) {
     res.status(500).json({
       ok: false,

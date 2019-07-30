@@ -7,7 +7,7 @@
 
 ### Pasantes.do
 
-instalar servicio den mongo
+instalar servicio de mongo
 ```
 docker-compose up -d --build
 ```
@@ -24,5 +24,5 @@ yarn dev
 
 Correr en Produccion
 ```
-yarn dev
+yarn start
 ```
