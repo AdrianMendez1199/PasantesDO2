@@ -100,7 +100,12 @@ const deleteUser = (req, res) => {
     });
 };
 
-const login = (req, res) => {
+const getUser = (user) => {
+  const getUser = User.findOne({user, status:true});
+
+  if(getUser) {
+    console.log(getUser);
+  }
 
 };
 
@@ -109,5 +114,5 @@ module.exports = {
   createUser,
   deleteUser,
   editUser,
-  login,
+  getUser,
 };
