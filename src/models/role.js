@@ -21,6 +21,9 @@ const RoleSchema = new mongoose.Schema({
     default: true,
   },
 
+  permissions:{
+    type:Array
+  },
   create_at: {
     type: Date,
     default: Date.now,

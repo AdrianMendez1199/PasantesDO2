@@ -4,10 +4,10 @@ const router = express.Router();
 
 const permission = require('../controllers/permission');
 
-const { verifyToken, verifyRole } = require('../middlewares/authentication');
+const { verifyToken, verifyAdminRole } = require('../middlewares/authentication');
 
-router.post('/create', [ verifyToken, verifyRole ], permission.createPermission)
-      .get('/', [ verifyToken, verifyRole ], permission.getPermissions);
+router.post('/create', [ verifyToken, verifyAdminRole ], permission.createPermission)
+      .get('/', [ verifyToken, verifyAdminRole ], permission.getPermissions);
 
 module.exports = router;
 
