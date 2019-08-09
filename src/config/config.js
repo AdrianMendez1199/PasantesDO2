@@ -1,5 +1,5 @@
 // =============================
-// Puerto 
+// Puerto
 // =============================
 process.env.PORT = process.env.PORT || 3000;
 
@@ -27,7 +27,7 @@ process.env.URLDB = urlDB;
 // Caducidad TOKEN
 // =============================
 
-process.env.CADUCIDAD_TOKEN = 60 * 60;
+process.env.CADUCIDAD_TOKEN = 60 * 60 * 24;
 
 
 // =============================
@@ -35,4 +35,3 @@ process.env.CADUCIDAD_TOKEN = 60 * 60;
 // =============================
 
 process.env.SEED = process.env.SEED || 'hola-mundo-token-autenticacion';
-

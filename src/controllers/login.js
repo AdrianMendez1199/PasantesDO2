@@ -1,7 +1,7 @@
 // const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 
 const auth = async (req, res) => {
   const { body } = req;
@@ -20,16 +20,15 @@ const auth = async (req, res) => {
         message: 'usuario o (clave) incorrecto',
       });
     }
-    let token = jwt.sign({
-      payload: userLogin,
-    }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
+    const token = jwt.sign({
+      user: userLogin,
+    }, process.env.SEED, { expiresIn: '1h' });
 
     res.status(200).json({
       ok: true,
       userLogin,
-      token
+      token,
     });
-
   } catch (err) {
     res.status(500).json({
       ok: false,

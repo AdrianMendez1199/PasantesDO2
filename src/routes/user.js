@@ -5,12 +5,12 @@ const router = express.Router();
 
 const userController = require('../controllers/user');
 
-const { verifyToken } = require('../middlewares/authentication');
+const { verifyToken, verifyRole } = require('../middlewares/authentication');
 
-router.get('/', verifyToken, userController.getUsers)
+router.get('/', [verifyToken, verifyRole], userController.getUsers)
   .post('/create', userController.createUser)
-  .put('/edit/:id', userController.editUser)
-  .delete('/delete/:id', userController.deleteUser);
+  .put('/edit/:id', verifyToken, userController.editUser)
+  .delete('/delete/:id', verifyToken, userController.deleteUser);
 
 
 module.exports = router;

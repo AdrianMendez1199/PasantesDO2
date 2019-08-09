@@ -4,7 +4,16 @@ const User = require('../models/user');
 
 const getUsers = async (req, res) => {
   try {
-    const users = await User.find({ status: true });
+    let desde = req.query.desde || 0;
+    desde = Number(desde);
+
+    let limite = req.query.limite || 0;
+    limite = Number(limite);
+
+    const users = await User.find({ status: true })
+      .skip(desde)
+      .limit(limite);
+
     const count = await User.countDocuments({ status: true });
     res.status(200).json({
       ok: true,
