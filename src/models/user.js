@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-// const Role = require('./role');
-
 
 const rolesValid = {
   values: ['ADMIN_ROL', 'USER_ROLE'], // add function to find roles valid
@@ -36,8 +34,8 @@ const UserSchema = new mongoose.Schema({
     required: false,
   },
   status: {
-    type: Boolean,
-    default: true,
+    type: String,
+    default: 'PEND',
   },
 
   google: {

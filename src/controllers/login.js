@@ -1,4 +1,3 @@
-// const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
@@ -11,13 +10,13 @@ const auth = async (req, res) => {
     if (!userLogin) {
       res.status(400).json({
         ok: false,
-        message: '(usuario) o clave incorrecto',
+        message: 'usuario o clave incorrecto',
       });
     }
     if (!await bcrypt.compareSync(body.password, userLogin.password)) {
       res.status(401).json({
         ok: false,
-        message: 'usuario o (clave) incorrecto',
+        message: 'usuario o clave incorrecto',
       });
     }
     const token = jwt.sign({
