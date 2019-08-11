@@ -21,15 +21,15 @@ const RoleSchema = new mongoose.Schema({
     default: true,
   },
 
-  permissions:{
-    type:Array
+  permissions: {
+    type: Array,
   },
-  create_at: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },
 
-  update_at: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },

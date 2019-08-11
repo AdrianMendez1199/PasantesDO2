@@ -27,11 +27,10 @@ process.env.URLDB = urlDB;
 // Caducidad TOKEN
 // =============================
 
-process.env.CADUCIDAD_TOKEN = 60 * 60 * 24;
+process.env.CADUCIDAD_TOKEN = process.env.CADUCIDAD_TOKEN || 60 * 60 * 24;
 
 
 // =============================
 // SEED de autenticacion
 // =============================
-
 process.env.SEED = process.env.SEED || 'hola-mundo-token-autenticacion';
