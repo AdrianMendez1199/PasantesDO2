@@ -11,7 +11,7 @@ const getUsers = async (req, res) => {
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
-    let limite = req.query.limite || 0;
+    let limite = req.query.limite || 5;
     limite = Number(limite);
 
     const users = await User.find({ status: 'A' })
@@ -52,35 +52,10 @@ const createUser = async (req, res) => {
 
       await token.save();
 
-      // Send the email
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'mendezadrian149@gmail.com',
-          pass: '8492560038',
-        },
-      });
-      const mailOptions = {
-        from: 'no-reply@yourwebapplication.com',
-        to: user.email,
-        subject: 'Account Verification Token',
-        text: `${'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/'}${req.headers.host}\/user\/confirmation\/${token.token}.\n`,
-      };
+      const host = req.headers.host;
 
-      transporter.sendMail(mailOptions, (err) => {
-        if (err) {
-          return res.status(500).json({
-            ok: false,
-            msg: err.message,
-          });
-        }
+      await sendUserEmail(req, res, host, user, token);
 
-        return res.status(200).json({
-          ok: true,
-          user: userSave,
-          message: `A verification email has been sent to ${user.email}.`,
-        });
-      });
     }
   } catch (err) {
     res.status(400).json({
@@ -189,10 +164,48 @@ const confirmationUser = async (req, res, next) => {
   }
 };
 
+const sendUserEmail = async (req, res, host, user, token) => {
+
+  // Send the email
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'mendezadrian149@gmail.com',
+      pass: '8492560038',
+    },
+  });
+  const mailOptions = {
+    from: 'no-reply@yourwebapplication.com',
+    to: user.email,
+    subject: 'Account Verification Token',
+    text: `${'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/'}${host}\/user\/confirmation\/${token.token}.\n`,
+  };
+
+
+  transporter.sendMail(mailOptions, (err) => {
+    if (err) {
+      return res.status(500).json({
+        ok: false,
+        err,
+      });
+    }
+
+    return res.status(200).json({
+      ok: true,
+      user,
+      message: 'correo enviado'
+    });
+
+
+  });
+
+}
+
 module.exports = {
   getUsers,
   createUser,
   deleteUser,
   editUser,
   confirmationUser,
+  sendUserEmail,
 };

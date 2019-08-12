@@ -8,13 +8,21 @@ const auth = async (req, res) => {
     const userLogin = await User.findOne({ email: body.email });
 
     if (!userLogin) {
-      res.status(400).json({
+      return res.status(400).json({
         ok: false,
         message: 'usuario o clave incorrecto',
       });
     }
+
+    if (userLogin.status == 'PEND') {
+      return res.status(200).json({
+        ok: false,
+        message: 'pendiente Validacion',
+      });
+    }
+
     if (!await bcrypt.compareSync(body.password, userLogin.password)) {
-      res.status(401).json({
+      return res.status(401).json({
         ok: false,
         message: 'usuario o clave incorrecto',
       });
@@ -23,13 +31,13 @@ const auth = async (req, res) => {
       user: userLogin,
     }, process.env.SEED, { expiresIn: '1h' });
 
-    res.status(200).json({
+    return res.status(200).json({
       ok: true,
       userLogin,
       token,
     });
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       ok: false,
       err,
     });
