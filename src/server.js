@@ -1,14 +1,17 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+import express from 'express';
+import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
 
-require('./config/config');
-require('./config/database');
+import './config/config';
+import './config/database';
 
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+dotenv.config();
 
 // configuracion de las rutas
 app.use(require('./routes/index'));

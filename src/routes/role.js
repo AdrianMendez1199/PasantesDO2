@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
+
+import Role  from '../controllers/role'; 
 
 const router = express.Router();
 
-const Role = require('../controllers/role');
 
 router.post('/create', Role.createRole)
   .get('/', Role.getRoles);

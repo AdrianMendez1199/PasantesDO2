@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express';
+import userController from '../controllers/user';
 
 const router = express.Router();
 
 
-const userController = require('../controllers/user');
 
-const { verifyToken, verifyAdminRole } = require('../middlewares/authentication');
+import { verifyToken, verifyAdminRole } from'../middlewares/authentication';
 
 router.get('/users', [verifyToken, verifyAdminRole], userController.getUsers)
   .get('/confirmation/:token', userController.confirmationUser)

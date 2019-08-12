@@ -1,10 +1,9 @@
-const express = require('express');
+import express from 'express';
+import permission from '../controllers/permission';
+import { verifyToken, verifyAdminRole } from '../middlewares/authentication';
 
 const router = express.Router();
 
-const permission = require('../controllers/permission');
-
-const { verifyToken, verifyAdminRole } = require('../middlewares/authentication');
 
 router.post('/create', [verifyToken, verifyAdminRole], permission.createPermission)
   .get('/', [verifyToken, verifyAdminRole], permission.getPermissions);

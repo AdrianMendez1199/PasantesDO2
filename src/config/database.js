@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 require('./config');
 // const uri = 'mongodb://localhost:27017/pasantesDO';

@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
 
-const user = require('./user');
-const role = require('./role');
-const login = require('./login');
-const permission = require('./permission');
+import user from './user';
+import role from './role';
+import login from './login';
+import permission from './permission';
 
 const app = express();
 

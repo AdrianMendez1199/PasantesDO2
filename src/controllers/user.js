@@ -1,10 +1,10 @@
-const bcrypt = require('bcrypt');
-const _ = require('underscore');
-const nodemailer = require('nodemailer');
-const crypto = require('crypto');
+import bcrypt from 'bcrypt';
+import _ from 'underscore';
+import nodemailer from 'nodemailer';
+import crypto from 'crypto';
+import User from '../models/user';
+import Token from '../models/tokenVerify';
 
-const User = require('../models/user');
-const Token = require('../models/tokenVerify');
 
 const getUsers = async (req, res) => {
   try {
@@ -115,12 +115,12 @@ const deleteUser = (req, res) => {
 
 
 /**
- *
- * @param {*} req
- * @param {*} res
- * @param {*} next
+ * this funtion check token to user confirmation
+ * 
+ * @param {Request} req
+ * @param {Response} res
  */
-const confirmationUser = async (req, res, next) => {
+const confirmationUser = async (req, res) => {
   try {
     const token = await Token.findOne({ token: req.params.token });
 
@@ -159,26 +159,35 @@ const confirmationUser = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({
       ok: true,
-      err,
+      err: err,
+
     });
   }
 };
 
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {string} host 
+ * @param {Json} user 
+ * @param {Json} token 
+ */
 const sendUserEmail = async (req, res, host, user, token) => {
 
   // Send the email
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'mendezadrian149@gmail.com',
-      pass: '8492560038',
+      user: process.env.USERNAME_EMAIL,
+      pass: process.env.PASS_EMAIL,
     },
   });
   const mailOptions = {
     from: 'no-reply@yourwebapplication.com',
     to: user.email,
     subject: 'Account Verification Token',
-    text: `${'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/'}${host}\/user\/confirmation\/${token.token}.\n`,
+    text: `${'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:'}${host}\/user\/confirmation\/${token.token}.\n`,
   };
 
 

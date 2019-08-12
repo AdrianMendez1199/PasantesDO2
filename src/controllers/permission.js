@@ -1,4 +1,4 @@
-const Permission = require('../models/permission');
+import Permission from '../models/permission';
 
 
 const createPermission = (req, res) => {

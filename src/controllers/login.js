@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+import bcrypt from 'bcrypt'; 
+import jwt from 'jsonwebtoken'; 
+import User from '../models/user'; 
 
 const auth = async (req, res) => {
   const { body } = req;
