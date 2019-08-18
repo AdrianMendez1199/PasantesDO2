@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
-require('./config');
-// const uri = 'mongodb://localhost:27017/pasantesDO';
+import './config';
 
 
 module.exports = mongoose.connect(process.env.URLDB, {

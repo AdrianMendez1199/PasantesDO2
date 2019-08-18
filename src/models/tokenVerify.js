@@ -1,4 +1,4 @@
-import mongoose from "mongoose"; 
+import mongoose from 'mongoose';
 
 
 const tokenSchema = new mongoose.Schema({
@@ -13,7 +13,7 @@ const tokenSchema = new mongoose.Schema({
     required: true,
   },
 
-  createdAt: {
+  created_at: {
     type: Date,
     required: true,
     default: Date.now,
@@ -22,4 +22,4 @@ const tokenSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('tokenVerify', tokenSchema);
+export default mongoose.model('tokenVerify', tokenSchema);

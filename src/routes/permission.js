@@ -1,11 +1,11 @@
 import express from 'express';
-import permission from '../controllers/permission';
+import { createPermission, getPermissions } from '../controllers/permission';
 import { verifyToken, verifyAdminRole } from '../middlewares/authentication';
 
 const router = express.Router();
 
 
-router.post('/create', [verifyToken, verifyAdminRole], permission.createPermission)
-  .get('/', [verifyToken, verifyAdminRole], permission.getPermissions);
+router.post('/create', [verifyToken, verifyAdminRole], createPermission)
+  .get('/', [verifyToken, verifyAdminRole], getPermissions);
 
-module.exports = router;
+export default router;

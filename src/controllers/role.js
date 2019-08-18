@@ -38,7 +38,4 @@ const createRole = (req, res) => {
     });
 };
 
-module.exports = {
-  getRoles,
-  createRole,
-};
+export { createRole, getRoles };

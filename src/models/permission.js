@@ -19,8 +19,9 @@ const schemaPermissions = new Schema({
     required: [true, 'el permiso es requerido'],
   },
   roles: {
-    type: Array,
+    type: String,
     default: 'ADMIN_ROLE',
+    enum: rolesValid,
   },
   status: {
     type: Boolean,
@@ -42,4 +43,4 @@ const schemaPermissions = new Schema({
 
 mongoose.plugin(uniqueValidator, { message: 'el campo {PATH} es unico.' });
 
-module.exports = mongoose.model('Permission', schemaPermissions);
+export default mongoose.model('Permission', schemaPermissions);

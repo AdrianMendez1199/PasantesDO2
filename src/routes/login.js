@@ -1,10 +1,11 @@
 import express from 'express';
 
-import login from '../controllers/login';
+import { auth, authGoogle } from '../controllers/login';
 
 const router = express.Router();
 
 
-router.post('/', login.auth);
+router.post('/', auth)
+  .post('/google', authGoogle);
 
-module.exports = router;
+export default router;

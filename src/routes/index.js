@@ -12,4 +12,4 @@ app.use('/role', role);
 app.use('/login', login);
 app.use('/permission', permission);
 
-module.exports = app;
+export default app;

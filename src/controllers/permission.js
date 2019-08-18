@@ -1,6 +1,6 @@
 import Permission from '../models/permission';
 
-
+/* eslint no-underscore-dangle: 0 */
 const createPermission = (req, res) => {
   const permission = new Permission({
     permission: req.body.permission,
@@ -9,10 +9,10 @@ const createPermission = (req, res) => {
   });
 
   permission.save()
-    .then(result => res.status(201).json({
+    .then((result) => res.status(201).json({
       ok: true,
       permission: result,
-    })).catch(err => res.status(400).json({
+    })).catch((err) => res.status(400).json({
       ok: false,
       err,
     }));
@@ -20,17 +20,13 @@ const createPermission = (req, res) => {
 
 const getPermissions = (req, res) => {
   Permission.find({ status: true })
-    .then(result => res.status(201).json({
+    .then((result) => res.status(201).json({
       ok: true,
       permission: result,
-    })).catch(err => res.status(400).json({
+    })).catch((err) => res.status(400).json({
       ok: false,
       err,
     }));
 };
 
-
-module.exports = {
-  createPermission,
-  getPermissions,
-};
+export { createPermission, getPermissions };

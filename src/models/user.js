@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'; 
+import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 
 
@@ -43,12 +43,12 @@ const UserSchema = new mongoose.Schema({
     default: false,
   },
 
-  create_at: {
+  created_at: {
     type: Date,
     default: Date.now,
   },
 
-  update_at: {
+  updated_at: {
     type: Date,
     default: Date.now,
   },
@@ -69,5 +69,4 @@ UserSchema.methods.toJSON = function deletePasswordToJSON() {
   return userObject;
 };
 
-
-module.exports = mongoose.model('User', UserSchema);
+export default mongoose.model('User', UserSchema);

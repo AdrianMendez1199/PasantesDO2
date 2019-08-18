@@ -1,11 +1,11 @@
 import express from 'express';
 
-import Role  from '../controllers/role'; 
+import { createRole, getRoles } from '../controllers/role';
 
 const router = express.Router();
 
 
-router.post('/create', Role.createRole)
-  .get('/', Role.getRoles);
+router.post('/create', createRole)
+  .get('/', getRoles);
 
-module.exports = router;
+export default router;

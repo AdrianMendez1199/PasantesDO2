@@ -24,12 +24,12 @@ const RoleSchema = new mongoose.Schema({
   permissions: {
     type: Array,
   },
-  createdAt: {
+  created_at: {
     type: Date,
     default: Date.now,
   },
 
-  createdAt: {
+  updated_at: {
     type: Date,
     default: Date.now,
   },
@@ -38,4 +38,4 @@ const RoleSchema = new mongoose.Schema({
 
 mongoose.plugin(uniqueValidator, { message: 'el campo {PATH} es unico.' });
 
-module.exports = mongoose.model('Role', RoleSchema);
+export default mongoose.model('Role', RoleSchema);

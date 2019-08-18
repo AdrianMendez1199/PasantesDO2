@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 
 
-
 // ========================
 // verify token
 // ========================
@@ -18,7 +17,7 @@ const verifyToken = (req, res, next) => {
       });
     }
     req.user = decoded.user;
-    next();
+    return next();
   });
 };
 
@@ -29,7 +28,7 @@ const verifyToken = (req, res, next) => {
 const verifyAdminRole = (req, res, next) => {
   const { user } = req;
   if (user.role === 'ADMIN_ROLE') {
-    next();
+    return next();
   }
 
   return res.status(403).json({
@@ -40,7 +39,5 @@ const verifyAdminRole = (req, res, next) => {
   });
 };
 
-module.exports = {
-  verifyToken,
-  verifyAdminRole,
-};
+
+export { verifyAdminRole, verifyToken };

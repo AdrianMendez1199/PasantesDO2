@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 import _ from 'underscore';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
+
+
 import User from '../models/user';
 import Token from '../models/tokenVerify';
 
@@ -33,41 +35,10 @@ const getUsers = async (req, res) => {
   }
 };
 
-const createUser = async (req, res) => {
-  try {
-    const { body } = req;
-
-    const user = new User({
-      name: body.name,
-      email: body.email,
-      password: bcrypt.hashSync(body.password, 10),
-    });
-
-    const userSave = await user.save();
-    if (userSave) {
-      const token = new Token({
-        _userId: userSave._id,
-        token: crypto.randomBytes(16).toString('hex'),
-      });
-
-      await token.save();
-
-      const host = req.headers.host;
-
-      await sendUserEmail(req, res, host, user, token);
-
-    }
-  } catch (err) {
-    res.status(400).json({
-      ok: false,
-      err,
-    });
-  }
-};
-
 
 const editUser = (req, res) => {
   const { id } = req.params;
+  /* eslint no-underscore-dangle: 0 */
   const body = _.pick(req.body, ['name', 'email', 'role', 'img']);
 
   const updateOptions = {
@@ -116,13 +87,16 @@ const deleteUser = (req, res) => {
 
 /**
  * this funtion check token to user confirmation
- * 
+ *
  * @param {Request} req
  * @param {Response} res
  */
 const confirmationUser = async (req, res) => {
   try {
     const token = await Token.findOne({ token: req.params.token });
+
+    /* eslint no-underscore-dangle: 0 */
+    const userId = token._userId;
 
     if (!token) {
       return res.status(400).json({
@@ -131,7 +105,7 @@ const confirmationUser = async (req, res) => {
       });
     }
 
-    const user = await User.findById({ _id: token._userId });
+    const user = await User.findById({ userId });
 
     if (!user) {
       return res.status(400).json({
@@ -140,7 +114,7 @@ const confirmationUser = async (req, res) => {
       });
     }
 
-    if (user.status == 'A') {
+    if (user.status === 'A') {
       return res.status(400).json({
         ok: false,
         message: 'This user has already been verified.',
@@ -148,33 +122,29 @@ const confirmationUser = async (req, res) => {
     }
 
     user.status = 'A';
-    const userVerify = await user.save();
+    await user.save();
 
-    if (userVerify) {
-      return res.status(200).json({
-        ok: true,
-        message: 'The account has been verified. Please log in.',
-      });
-    }
+    return res.status(200).json({
+      ok: true,
+      message: 'The account has been verified. Please log in.',
+    });
   } catch (err) {
     return res.status(500).json({
       ok: true,
-      err: err,
-
+      err,
     });
   }
 };
 
 /**
- * 
- * @param {Request} req 
- * @param {Response} res 
- * @param {string} host 
- * @param {Json} user 
- * @param {Json} token 
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {string} host
+ * @param {Json} user
+ * @param {Json} token
  */
 const sendUserEmail = async (req, res, host, user, token) => {
-
   // Send the email
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -187,7 +157,7 @@ const sendUserEmail = async (req, res, host, user, token) => {
     from: 'no-reply@yourwebapplication.com',
     to: user.email,
     subject: 'Account Verification Token',
-    text: `${'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:'}${host}\/user\/confirmation\/${token.token}.\n`,
+    text: `${'Hello Please verify your account by clicking the link: http:'}${host}/user/confirmation/${token.token}`,
   };
 
 
@@ -202,19 +172,44 @@ const sendUserEmail = async (req, res, host, user, token) => {
     return res.status(200).json({
       ok: true,
       user,
-      message: 'correo enviado'
+      message: 'correo enviado',
+    });
+  });
+};
+
+const createUser = async (req, res) => {
+  try {
+    const { body } = req;
+
+    const user = new User({
+      name: body.name,
+      email: body.email,
+      password: bcrypt.hashSync(body.password, 10),
     });
 
+    const userSave = await user.save();
+    if (userSave) {
+      const token = new Token({
+        /* eslint no-underscore-dangle: 0 */
+        _userId: userSave._id,
+        token: crypto.randomBytes(16).toString('hex'),
+      });
 
-  });
+      await token.save();
 
-}
+      const { host } = req.headers;
 
-module.exports = {
-  getUsers,
-  createUser,
-  deleteUser,
-  editUser,
-  confirmationUser,
-  sendUserEmail,
+      await sendUserEmail(req, res, host, user, token);
+    }
+  } catch (err) {
+    res.status(400).json({
+      ok: false,
+      err,
+    });
+  }
+};
+
+
+export {
+  getUsers, createUser, deleteUser, editUser, confirmationUser,
 };

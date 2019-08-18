@@ -15,5 +15,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    "no-console": 0,
+    "import/no-unresolved": ["error", {commonjs: true, caseSensitive: true}],
   },
 };
