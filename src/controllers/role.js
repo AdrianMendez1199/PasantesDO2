@@ -1,4 +1,4 @@
-const Role = require('../models/role');
+import Role from '../models/role';
 
 const getRoles = (req, res) => {
   Role.find({ status: true })
@@ -38,7 +38,4 @@ const createRole = (req, res) => {
     });
 };
 
-module.exports = {
-  getRoles,
-  createRole,
-};
+export { createRole, getRoles };

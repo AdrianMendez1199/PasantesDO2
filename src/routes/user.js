@@ -1,14 +1,19 @@
-const express = require('express');
+import express from 'express';
+
+import {
+  getUsers, confirmationUser, createUser, editUser, deleteUser,
+} from '../controllers/user';
+
+
+import { verifyToken, verifyAdminRole } from '../middlewares/authentication';
 
 const router = express.Router();
 
-
-const userController = require('../controllers/user');
-
-router.get('/', userController.getUsers)
-  .post('/create', userController.createUser)
-  .put('/edit/:id', userController.editUser)
-  .delete('/delete/:id', userController.deleteUser);
+router.get('/users', [verifyToken, verifyAdminRole], getUsers)
+  .get('/confirmation/:token', confirmationUser)
+  .post('/create', createUser)
+  .put('/edit/:id', [verifyToken, verifyAdminRole], editUser)
+  .delete('/delete/:id', [verifyToken, verifyAdminRole], deleteUser);
 
 
-module.exports = router;
+export default router;

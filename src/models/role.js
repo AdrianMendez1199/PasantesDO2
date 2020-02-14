@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
+import mongoose from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
 
 
 const RoleSchema = new mongoose.Schema({
@@ -21,12 +21,15 @@ const RoleSchema = new mongoose.Schema({
     default: true,
   },
 
-  create_at: {
+  permissions: {
+    type: Array,
+  },
+  created_at: {
     type: Date,
     default: Date.now,
   },
 
-  update_at: {
+  updated_at: {
     type: Date,
     default: Date.now,
   },
@@ -35,4 +38,4 @@ const RoleSchema = new mongoose.Schema({
 
 mongoose.plugin(uniqueValidator, { message: 'el campo {PATH} es unico.' });
 
-module.exports = mongoose.model('Role', RoleSchema);
+export default mongoose.model('Role', RoleSchema);
